@@ -12,7 +12,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.ponroy.florian.topquiz.R;
+import com.ponroy.florian.topquiz.model.Ranking;
+import com.ponroy.florian.topquiz.model.Score;
 import com.ponroy.florian.topquiz.model.User;
+
+import java.util.List;
 
 import static java.lang.System.out;
 
@@ -21,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView mGreetingText;
     private EditText mNameInput;
     private Button mPlayButton;
+    private Button mRankingButton;
     private User mUser;
     public static final int GAME_ACTIVITY_REQUEST_CODE = 42;
     private SharedPreferences mPreferences;
@@ -42,10 +47,12 @@ public class MainActivity extends AppCompatActivity {
         mGreetingText = (TextView) findViewById(R.id.activity_main_greeting_txt);
         mNameInput = (EditText) findViewById(R.id.activity_main_name_input);
         mPlayButton = (Button) findViewById(R.id.activity_main_play_btn);
+        mRankingButton = (Button) findViewById(R.id.activity_main_ranking_btn);
 
         mPlayButton.setEnabled(false);
 
         greetUser();
+        enableRankingButton();
 
         mNameInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -77,6 +84,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivityForResult(gameActivityIntent, GAME_ACTIVITY_REQUEST_CODE);
             }
         });
+
+        mRankingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent rankingActivityIntent = new Intent(MainActivity.this, RankingActivity.class);
+                startActivity(rankingActivityIntent);
+            }
+        });
     }
 
     @Override
@@ -87,6 +102,7 @@ public class MainActivity extends AppCompatActivity {
 
             mPreferences.edit().putInt(PREF_KEY_SCORE, score).apply();
 
+            saveScore(score);
             greetUser();
         }
     }
@@ -105,6 +121,24 @@ public class MainActivity extends AppCompatActivity {
             mNameInput.setSelection(firstname.length());
             mPlayButton.setEnabled(true);
         }
+    }
+
+    private void saveScore(int score) {
+        Score newScore = new Score(score, mUser);
+        Ranking ranking = new Ranking(this);
+
+        List<Score> scoreList = ranking.loadScores();
+
+        // Add the score to the list
+        scoreList.add(newScore);
+        ranking.saveScores(scoreList);
+
+        enableRankingButton();
+    }
+
+    private void enableRankingButton() {
+        boolean rankingExists = new Ranking(this).isEmpty();
+        mRankingButton.setVisibility(rankingExists ? View.VISIBLE : View.INVISIBLE);
     }
 
     @Override
