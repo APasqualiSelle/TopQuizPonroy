@@ -22,13 +22,33 @@
         android:layout_marginEnd="20dp"
         android:hint="Please type your name"/>
 
-    <Button
-        android:id="@+id/activity_main_play_btn"
+    <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:padding="30dp"
-        android:layout_marginTop="20dp"
-        android:text="Let's play"/>
+        android:layout_gravity="center_horizontal">
+
+        <Button
+            android:id="@+id/activity_main_play_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="30dp"
+            android:layout_marginTop="20dp"
+            android:text="Let's play"/>
+
+        <!-- Make the button as wide as the play button -->
+        <Button
+            android:id="@+id/activity_main_ranking_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignStart="@id/activity_main_play_btn"
+            android:layout_alignLeft="@id/activity_main_play_btn"
+            android:layout_alignRight="@id/activity_main_play_btn"
+            android:layout_alignEnd="@id/activity_main_play_btn"
+            android:layout_below="@id/activity_main_play_btn"
+            android:padding="30dp"
+            android:layout_marginTop="20dp"
+            android:text="Ranking"/>
+
+    </RelativeLayout>
 
 </LinearLayout>
