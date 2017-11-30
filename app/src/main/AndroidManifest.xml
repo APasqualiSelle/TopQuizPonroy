@@ -18,6 +18,8 @@
         </activity>
         <activity android:name=".controller.GameActivity">
         </activity>
+        <activity android:name=".controller.RankingActivity">
+        </activity>
     </application>
 
 </manifest>
