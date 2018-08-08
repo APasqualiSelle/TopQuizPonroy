@@ -90,6 +90,7 @@ public class RankingActivity extends AppCompatActivity {
     }
 
     private void bindViews() {
+        //cette methode sert a creer une liason entre les views(LinearLayout) et les objets
         // Don't need to mess with row1, since it's always displayed.
         mRow2LinearLayout = (LinearLayout) findViewById(R.id.activity_ranking_row2_ll);
         mRow3LinearLayout = (LinearLayout) findViewById(R.id.activity_ranking_row3_ll);
